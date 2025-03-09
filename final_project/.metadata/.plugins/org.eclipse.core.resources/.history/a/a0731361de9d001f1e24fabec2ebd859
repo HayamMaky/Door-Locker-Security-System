@@ -1,0 +1,191 @@
+/*
+ * app.c
+ *
+ *  Created on: Nov 7, 2024
+ *      Author: Hayam
+ */
+#include"HAL/PIR/pir.h"
+#include"HAL/Motor/dc_motor.h"
+#include"HAL/Buzzer/buzzer.h"
+#include"HAL/EEPROM/external_eeprom.h"
+#include"MCAL/UART/uart.h"
+#include <avr/interrupt.h>
+#include"MCAL/Timer/timer.h"
+#include"MCAL/I2C/twi.h"
+/***********************************************************/
+#define PASSWORD_LENGTH      5
+#define CONTROL_ECU_READY    10
+#define CORRECT_PASS         77
+#define WRONG_PASS           88
+#define PASS_LOADING         11
+#define PASS_IN              22
+#define PASS_UPDATE          33
+#define start_address        0x0005
+#define PEOPLE_ON            1
+#define PEOPLE_OFF           0
+#define ALARM_ON             55
+/************************************************************/
+uint8 seconds;
+uint8 pass_1[PASSWORD_LENGTH]={0};
+uint8 pass_2[PASSWORD_LENGTH]={0};
+uint8 seconds;
+uint8 counter=0;
+uint8 pass_state=0;
+uint8 state = 0;
+uint8 flag = 1;
+uint8 status =0;
+uint8 peopleIN=0;
+/************************************************************/
+void timer_handler(void);
+/************************************************************/
+int main()
+{
+	UART_ConfigType uart_seting={_8_DATA_BITS,NO_PARITY,ONE_STOP_BIT,9600};
+	UART_init(&uart_seting);
+	/********************************************************/
+	Buzzer_init();
+	PIR_init();
+	/********************************************************/
+	TWI_ConfigType i2c_cfg = {0x01, 300};
+	TWI_init(&i2c_cfg);
+	/********************************************************/
+	sei();
+	Timer_ConfigType time1_setting = {0, 31250, TIMER1, F_CPU_256, COMPARE_MODE};
+	Timer_init(&time1_setting);
+	Timer_setCallBack(timer_handler, TIMER1);
+	/*********************************************************/
+
+	while(1)
+	{
+		state = UART_recieveByte();
+		if(state == PASS_LOADING)
+		{
+			for(counter = 0; counter< PASSWORD_LENGTH; ++counter)
+			{
+				pass_1[counter] = UART_recieveByte();
+			}
+			for(counter = 0; counter< PASSWORD_LENGTH; ++counter)
+			{
+				pass_2[counter] = UART_recieveByte();
+			}
+			for(counter = 0; counter< PASSWORD_LENGTH; ++counter)
+			{
+				if(pass_1[counter] != pass_2[counter])
+				{
+					UART_sendByte(WRONG_PASS);
+					break;
+				}
+			}
+			if(counter==PASSWORD_LENGTH)
+			{
+				UART_sendByte(CORRECT_PASS);
+				for(counter =0;counter<PASSWORD_LENGTH; ++counter)
+				{
+					status =EEPROM_writeByte(start_address + counter, pass_1[counter]);
+					_delay_ms(20);
+				}
+			}
+
+		}
+		else if(state == PASS_IN)
+		{
+			for(counter = 0;counter< PASSWORD_LENGTH; ++counter)
+			{
+				pass_1[counter] = UART_receiveByte();
+			}
+			for(counter = 0;counter< PASSWORD_LENGTH; ++counter)
+			{
+				status = EEPROM_readByte(start_address + counter, &pass_2[counter]);
+				_delay_ms(20);
+			}
+			for(counter = 0;counter< PASSWORD_LENGTH; ++counter)
+			{
+				if(pass_1[counter] != pass_2[counter])
+				{
+					UART_sendByte(WRONG_PASS);
+					break;
+				}
+			}
+			if(counter ==PASSWORD_LENGTH)
+			{
+				UART_sendByte(CORRECT_PASS);
+				DcMotor_Rotate(CW, 100);
+				seconds = 0;
+				while(seconds < 15);
+				DcMotor_Rotate(Stop, 0);
+				do{
+					peopleIN = PIR_getState();
+					UART_sendByte(PEOPLE_ON);
+				 }while(peopleIN);
+				UART_sendByte(PEOPLE_OFF);
+				seconds = 0;
+				DcMotor_Rotate(A_CW, 100);
+				while(seconds < 15);
+				DcMotor_Rotate(Stop, 0);
+			}
+		}
+		else if(state ==  PASS_UPDATE )
+		{
+			for(counter = 0; counter < 5; ++counter)
+			{
+				pass_1[counter] = UART_receiveByte();
+			}
+			for(counter = 0;counter< 5; ++counter)
+			{
+				status = EEPROM_readByte(start_address + counter , &pass_2[counter]);
+				_delay_ms(10);
+			}
+			for(counter= 0; counter< 5; ++counter)
+			{
+				if(pass_1[counter] != pass_2[counter])
+				{
+					UART_sendByte(WRONG_PASS);
+					break;
+				}
+			}
+			if(counter == PASSWORD_LENGTH)
+			{
+				UART_sendByte(CORRECT_PASS);
+				for(counter = 0; counter < 5; ++counter)
+				{
+					pass_1[counter] = UART_receiveByte();
+				}
+				for(counter = 0; counter < 5; ++counter)
+				{
+					pass_2[counter] = UART_receiveByte();
+				}
+				for(counter= 0; counter< 5; ++counter)
+				{
+					if(pass_1[counter] != pass_2[counter])
+					{
+						UART_sendByte(WRONG_PASS);
+						break;
+					}
+				}
+				if(counter ==PASSWORD_LENGTH )
+				{
+					UART_sendByte(CORRECT_PASS);
+					for(counter= 0; counter< 5; ++counter)
+					{
+						status =EEPROM_writeByte(start_address + counter, pass_1[counter]);
+						_delay_ms(10);
+					}
+				}
+			}
+		}
+		else if (state == ALARM_ON)
+		{
+			Buzzer_ON();
+			seconds = 0;
+			while(seconds < 60);
+			Buzzer_OFF();
+		}
+
+
+
+	}
+}
+void timer_handler(void)
+{
+	seconds++;
+}

@@ -1,0 +1,47 @@
+/*
+ * app.c
+ *
+ *  Created on: Nov 7, 2024
+ *      Author: Hayam
+ */
+#include"pir.h"
+#include"dc_motor.h"
+#include"buzzer.h"
+#include"external_eeprom.h"
+#include"uart.h"
+/***********************************************************/
+#define PASSWORD_LENGTH 5
+/************************************************************/
+
+int main()
+{
+	UART_ConfigType seting={_8_DATA_BITS,NO_PARITY,ONE_STOP_BIT,9600};
+	UART_init(&seting);
+	char pass_1[PASSWORD_LENGTH+1];
+	char pass_2[PASSWORD_LENGTH+1];
+	char i;
+	char flag = 1;
+	while(1)
+	{
+		UART_receiveString(pass_1);
+		UART_receiveString(pass_2);
+		for(i=0;i<PASSWORD_LENGTH;i++)
+		{
+			if(pass_1[i]!=pass_2[i])
+			{
+				flag=0;
+			}
+
+		}
+		if(flag==1)
+		{
+			UART_sendByte(flag);
+		}
+		else
+		{
+			UART_sendByte(flag);
+		}
+
+	}
+}
+

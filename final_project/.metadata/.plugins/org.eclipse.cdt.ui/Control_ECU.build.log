@@ -1,0 +1,81 @@
+18:30:10 **** Build of configuration Debug for project Control_ECU ****
+make all 
+Building file: ../MCAL/UART/uart.c
+Invoking: AVR Compiler
+avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega32 -DF_CPU=8000000UL -MMD -MP -MF"MCAL/UART/uart.d" -MT"MCAL/UART/uart.o" -c -o "MCAL/UART/uart.o" "../MCAL/UART/uart.c"
+Finished building: ../MCAL/UART/uart.c
+ 
+Building file: ../MCAL/Timer/timer.c
+Invoking: AVR Compiler
+avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega32 -DF_CPU=8000000UL -MMD -MP -MF"MCAL/Timer/timer.d" -MT"MCAL/Timer/timer.o" -c -o "MCAL/Timer/timer.o" "../MCAL/Timer/timer.c"
+Finished building: ../MCAL/Timer/timer.c
+ 
+Building file: ../MCAL/PWM/pwm_timer0.c
+Invoking: AVR Compiler
+avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega32 -DF_CPU=8000000UL -MMD -MP -MF"MCAL/PWM/pwm_timer0.d" -MT"MCAL/PWM/pwm_timer0.o" -c -o "MCAL/PWM/pwm_timer0.o" "../MCAL/PWM/pwm_timer0.c"
+Finished building: ../MCAL/PWM/pwm_timer0.c
+ 
+Building file: ../MCAL/I2C/twi.c
+Invoking: AVR Compiler
+avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega32 -DF_CPU=8000000UL -MMD -MP -MF"MCAL/I2C/twi.d" -MT"MCAL/I2C/twi.o" -c -o "MCAL/I2C/twi.o" "../MCAL/I2C/twi.c"
+Finished building: ../MCAL/I2C/twi.c
+ 
+Building file: ../MCAL/GPIO/gpio.c
+Invoking: AVR Compiler
+avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega32 -DF_CPU=8000000UL -MMD -MP -MF"MCAL/GPIO/gpio.d" -MT"MCAL/GPIO/gpio.o" -c -o "MCAL/GPIO/gpio.o" "../MCAL/GPIO/gpio.c"
+Finished building: ../MCAL/GPIO/gpio.c
+ 
+Building file: ../HAL/PIR/pir.c
+Invoking: AVR Compiler
+avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega32 -DF_CPU=8000000UL -MMD -MP -MF"HAL/PIR/pir.d" -MT"HAL/PIR/pir.o" -c -o "HAL/PIR/pir.o" "../HAL/PIR/pir.c"
+Finished building: ../HAL/PIR/pir.c
+ 
+Building file: ../HAL/Motor/dc_motor.c
+Invoking: AVR Compiler
+avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega32 -DF_CPU=8000000UL -MMD -MP -MF"HAL/Motor/dc_motor.d" -MT"HAL/Motor/dc_motor.o" -c -o "HAL/Motor/dc_motor.o" "../HAL/Motor/dc_motor.c"
+Finished building: ../HAL/Motor/dc_motor.c
+ 
+Building file: ../HAL/EEPROM/external_eeprom.c
+Invoking: AVR Compiler
+avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega32 -DF_CPU=8000000UL -MMD -MP -MF"HAL/EEPROM/external_eeprom.d" -MT"HAL/EEPROM/external_eeprom.o" -c -o "HAL/EEPROM/external_eeprom.o" "../HAL/EEPROM/external_eeprom.c"
+Finished building: ../HAL/EEPROM/external_eeprom.c
+ 
+Building file: ../HAL/Buzzer/buzzer.c
+Invoking: AVR Compiler
+avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega32 -DF_CPU=8000000UL -MMD -MP -MF"HAL/Buzzer/buzzer.d" -MT"HAL/Buzzer/buzzer.o" -c -o "HAL/Buzzer/buzzer.o" "../HAL/Buzzer/buzzer.c"
+Finished building: ../HAL/Buzzer/buzzer.c
+ 
+Building file: ../app_Control_ECU.c
+Invoking: AVR Compiler
+avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega32 -DF_CPU=8000000UL -MMD -MP -MF"app_Control_ECU.d" -MT"app_Control_ECU.o" -c -o "app_Control_ECU.o" "../app_Control_ECU.c"
+In file included from ../app_Control_ECU.c:15:
+c:/winavr-20100110/lib/gcc/../../avr/include/util/delay.h:90:3: warning: #warning "Compiler optimizations disabled; functions from <util/delay.h> won't work as designed"
+Finished building: ../app_Control_ECU.c
+ 
+Building target: Control_ECU.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,Control_ECU.map -mmcu=atmega32 -o "Control_ECU.elf"  ./MCAL/UART/uart.o  ./MCAL/Timer/timer.o  ./MCAL/PWM/pwm_timer0.o  ./MCAL/I2C/twi.o  ./MCAL/GPIO/gpio.o  ./HAL/PIR/pir.o  ./HAL/Motor/dc_motor.o  ./HAL/EEPROM/external_eeprom.o  ./HAL/Buzzer/buzzer.o  ./app_Control_ECU.o   
+Finished building target: Control_ECU.elf
+ 
+Invoking: AVR Create Extended Listing
+avr-objdump -h -S Control_ECU.elf  >"Control_ECU.lss"
+Finished building: Control_ECU.lss
+ 
+Invoking: Print Size
+avr-size --format=avr --mcu=atmega32 Control_ECU.elf
+AVR Memory Usage
+----------------
+Device: atmega32
+
+Program:   15132 bytes (46.2% Full)
+(.text + .data + .bootloader)
+
+Data:        310 bytes (15.1% Full)
+(.data + .bss + .noinit)
+
+
+Finished building: sizedummy
+ 
+
+18:30:16 Build Finished. 0 errors, 1 warnings. (took 5s.189ms)
+

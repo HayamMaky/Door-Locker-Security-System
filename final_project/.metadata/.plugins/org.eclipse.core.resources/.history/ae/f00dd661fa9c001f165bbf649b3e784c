@@ -1,0 +1,20 @@
+/*
+ * app_HMI_ECU.c
+ *
+ *  Created on: Oct 31, 2024
+ *      Author: Hayam
+ */
+#include"keypad.h"
+#include"lcd.h"
+/**********************************************************/
+int main()
+{
+	char* str1 = "Plz enter Pass:";
+	LCD_init();
+	LCD_displayString(str1);
+	while(1)
+	{
+
+
+	}
+}

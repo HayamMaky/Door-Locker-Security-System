@@ -1,0 +1,57 @@
+/*
+ * app_HMI_ECU.c
+ *
+ *  Created on: Oct 31, 2024
+ *      Author: Hayam
+ */
+#include"keypad.h"
+#include"lcd.h"
+/**********************************************************/
+#define PASSWORD_LENGTH 5
+#define MAX_ATTEMPTS 3
+#define UNLOCK_DURATION 15  /* Seconds for motor rotation*/
+#define BUZZER_DURATION 60  /* 1 minute in seconds*/
+
+/**********************************************************/
+
+void  Create_a_System_Password(void);
+int main()
+{
+
+	LCD_init();
+
+
+	while(1)
+	{
+		while(1)
+		{
+			Create_a_System_Password();
+		}
+	}
+}
+void  Create_a_System_Password(void)
+{
+	char* str1 = "Plz enter Pass:";
+	char pass[ PASSWORD_LENGTH + 1 ];
+	char count = 0;
+	char i;
+	char ch ='*';
+	for(i=0;i<PASSWORD_LENGTH;i++)
+	{
+		pass[PASSWORD_LENGTH + 1]='\0';
+		pass[i]='*';
+	}
+	LCD_moveCursor(0,0);
+	LCD_displayString(str1);
+	while(count<PASSWORD_LENGTH)
+	{
+		pass[count]=KEYPAD_getPressedKey();
+		if(pass[count] != '*')
+		{
+			LCD_moveCursor(1,count);
+			LCD_displayCharacter(ch);
+			count++;
+		}
+
+	}
+}
